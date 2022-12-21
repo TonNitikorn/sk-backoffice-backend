@@ -7,6 +7,7 @@ const cors = require('cors')
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+console.log(' :>> ');
 
 
 // const passport = require('./middleware/passport');
