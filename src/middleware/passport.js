@@ -21,24 +21,24 @@ exports.authorized = async (req, res, next) => {
                 throw error;
             } 
 
-            const member = await models.member.findOne({
+            const admin = await models.admins.findOne({
                     where: { uuid: token.uuid },
             });
 
-            if (!member) {
+            if (!admin) {
                 const error = new Error("Invalid Token")
                 error.statusCode = 401
                 throw error;
             }
 
             // check status is active
-            if (member.status !== 'active') {
+            if (admin.status !== 'ACTIVE') {
                 const error = new Error("Account is not active")
                 error.statusCode = 401
                 throw error;
             }
 
-            req.member = member;
+            req.admin = admin;
 
         } catch (error) {
             next(error);

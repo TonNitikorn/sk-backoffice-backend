@@ -6,8 +6,9 @@ const logger = require('morgan');
 const cors = require('cors')
 
 const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
-console.log(' :>> ');
+const authRouter = require('./v1/auth/router');
+const bankRouter = require('./v1/bank/router');
+const memberRouter = require('./v1/members/router');
 
 
 // const passport = require('./middleware/passport');
@@ -25,7 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
+app.use('/bank', bankRouter);
+app.use('/member', memberRouter);
 
 
 app.use(errorHandler);
