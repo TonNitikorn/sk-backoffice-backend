@@ -63,7 +63,7 @@ exports.setMemberStatus = async (req, res, next) => {
 //get member by uuid
 exports.getMemberByUuid = async (req, res, next) => {
     try {
-        const uuid = req.params.uuid;
+        const uuid = req.body.uuid;
         const member = await memberServices.getMemberByUuid(uuid);
         res.status(200).json(
             member
