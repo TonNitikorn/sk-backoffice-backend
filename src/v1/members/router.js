@@ -7,8 +7,8 @@ const passport = require('../../middleware/passport');
 
 router.post('/member_list', [ passport.authorized ], memberServices.getMemberList);
 router.post('/create_member',[ passport.authorized ], memberServices.createMember);
-router.post('/update_member/:uuid',[ passport.authorized ], memberServices.updateMember);
-router.post('/set_member_status/:uuid',[ passport.authorized ], memberServices.setMemberStatus);
+router.post('/update_member',[ passport.authorized ], memberServices.updateMember);
+router.post('/set_member_status',[ passport.authorized ], memberServices.changeMemberStatus);
 router.post('/get_member',[ passport.authorized ], memberServices.getMemberByUuid);
 
 

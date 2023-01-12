@@ -35,7 +35,7 @@ exports.updateMember = async (req, res, next) => {
     try {
         const data = req.body;
         const admin = req.admin;
-        const uuid = req.params.uuid;
+        const uuid = req.body.uuid;
         const member = await memberServices.updateMember(data, admin,uuid);
         res.status(200).json({message: 'แก้ไขสมาชิกสำเร็จ'});
     } catch (error) {
@@ -44,11 +44,11 @@ exports.updateMember = async (req, res, next) => {
 }
 
 //set member status by uuid
-exports.setMemberStatus = async (req, res, next) => {
+exports.changeMemberStatus = async (req, res, next) => {
     try {
-        const uuid = req.body.uuid;
+        const data = req.body;
         const admin = req.admin;
-        const member = await memberServices.setMemberStatus(uuid, admin);
+        const member = await memberServices.changeMemberStatus(data, admin);
         res.status(200).json(
             {
                 message: 'แก้ไขสถานะสมาชิกสำเร็จ',

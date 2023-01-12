@@ -7,8 +7,8 @@ const passport = require('../../middleware/passport');
 
 router.post('/bank_list',[ passport.authorized ], bankController.getBankList);
 router.post('/create_bank',[ passport.authorized ], bankController.createBank);
-router.post('/update_bank/:uuid',[ passport.authorized ], bankController.updateBank);
-router.post('/delete_bank/:uuid',[ passport.authorized ], bankController.deleteBank);
+router.post('/update_bank',[ passport.authorized ], bankController.updateBank);
+router.post('/delete_bank',[ passport.authorized ], bankController.deleteBank);
 
 
 module.exports = router;

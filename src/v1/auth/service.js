@@ -92,6 +92,16 @@ exports.register = async (data) => {
         create_at: new Date(),
     });
 
+    //log action
+    await model.log_actions.create({
+        uuid: uuidv4(),
+        admins_uuid: admin.uuid,
+        actions: 'register',
+        description: data,
+        create_at: new Date(),
+    });
+    
+
     const token = jwt.sign({ uuid: admin.uuid, }, config.JWT_KEY, { expiresIn: config.JWT_EXP });
     // const expiresin = jwt.decode(token).exp;
     return {

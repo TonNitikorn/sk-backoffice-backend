@@ -16,7 +16,11 @@ exports.getMemberList = async () => {
 
     const member = await model.members.findAll({
         where: where,
-        attributes: { exclude: ['id', 'update_at','password'] }
+        attributes: { exclude: ['id', 'update_at','password'] },
+        order: [
+            ['create_at', 'DESC']
+        ]
+        
     });
 
     //return member list

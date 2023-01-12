@@ -38,7 +38,8 @@ exports.createBank = async (req, res, next) => {
 //update bank
 exports.updateBank = async (req, res, next) => {
     try {
-        const uuid =  req.params.uuid;
+        const uuid =   req.body.uuid;
+        // console.log('uuid :>> ', uuid);
         const data = req.body;
         const admin = req.admin;
         const bank = await bankServices.updateBank(data, admin,uuid);
@@ -53,7 +54,7 @@ exports.updateBank = async (req, res, next) => {
 //delete bank by uuid query
 exports.deleteBank = async (req, res, next) => {
     try {
-        const uuid =  req.params.uuid;
+        const uuid =  req.body.uuid;
         const admin = req.admin;
         const bank = await bankServices.deleteBank(uuid, admin);
         res.status(200).json({
