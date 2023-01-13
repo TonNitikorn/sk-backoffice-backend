@@ -22,3 +22,15 @@ exports.updateAdminPassword = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.register = async (req, res, next) => {
+    try {
+        const admin = await adminService.register(req.body);
+        res.status(200).json(
+            admin
+        );
+    } catch (error) {
+        next(error);
+    }
+}
+ 
