@@ -125,3 +125,35 @@ exports.register = async (data) => {
     }
 };
  
+//update admin
+exports.updateAdmin = async (data, admin) => {
+    //check body data is null
+    if (!data.name  || !data.role || !data.tel || !data.status || !data.preference ) {
+        const error = new Error("ข้อมูลไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    await model.log_actions.create({
+        uuid: uuidv4(),
+        admins_uuid: admin.uuid,
+        actions: 'update',
+        description: data,
+        create_at: new Date(),
+    });
+    await model.admins.update({
+        name: data.name,
+        role: data.role,
+        tel: data.tel,
+        status: data.status,
+        preference: data.preference,
+        update_at: new Date()
+    }, {
+        where: {
+            uuid: admin.uuid
+        }
+    });
+    return {
+        message: 'แก้ไขข้อมูลสำเร็จ'
+    }
+}

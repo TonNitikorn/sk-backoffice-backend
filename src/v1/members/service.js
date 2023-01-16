@@ -6,15 +6,17 @@ const bcrypt = require('bcryptjs');
 
 
 //get member list
-exports.getMemberList = async () => {
+exports.getMemberList = async (data, admin) => {
     const where = {};
 
-    // //check type is null
-    // if (!type) {
-    //     where.type = {
-    //         [Op.all]: sequelize.literal('SELECT 1'),
-    //     };
-    // }
+//where by create_at
+    if (data.create_at_start && data.create_at_end) {
+        where.create_at = {
+            [Op.between]: [data.create_at_start, data.create_at_end]
+        }
+    }
+
+    console.log('where :>> ', where);
 
     const member = await model.members.findAll({
         where: where,
@@ -76,7 +78,7 @@ exports.createMember = async (data, admin) => {
         if (data.platform != 'friend') {
             data.affiliate_by = '-'
         }
-        
+
     
         //create member
         const member = await model.members.create({

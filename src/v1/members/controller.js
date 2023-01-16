@@ -4,7 +4,8 @@ const memberServices = require('./service');
 //get member list
 exports.getMemberList = async (req, res, next) => {
     try {
-        const member = await memberServices.getMemberList();
+        const data = req.body;
+        const member = await memberServices.getMemberList(data);
         res.status(200).json(
             member
         );

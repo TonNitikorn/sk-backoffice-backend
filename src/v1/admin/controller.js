@@ -33,4 +33,17 @@ exports.register = async (req, res, next) => {
         next(error);
     }
 }
+
+//udpate admin data
+exports.updateAdmin = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const admin = req.admin;
+        const adminUpdate = await adminService.updateAdmin(data, admin);
+        res.status(200).json({message: 'แก้ไขข้อมูลสำเร็จ'});
+    } catch (error) {
+        next(error);
+    }
+}
+
  
