@@ -6,14 +6,14 @@ const bcrypt = require('bcryptjs');
 
 //get admin by token
 exports.getAdminByToken = async (admin) => {
-    const admin = await model.admins.findOne({
+    const admin_data = await model.admins.findOne({
         where: {
             uuid: admin.uuid
         },
         attributes: { exclude: ['id', 'update_at', 'password'] }
     });
 
-    return admin;
+    return admin_data;
 }
 
 //update admin password
@@ -34,14 +34,14 @@ exports.updateAdminPassword = async (data, admin) => {
     // }
 
     //find admin by uuid
-    const admin = await model.admins.findOne({
+    const admin_data = await model.admins.findOne({
         where: {
             uuid: admin.uuid
         }
     });
     
     //check admin is ACTIVE
-    if (admin.status !== 'ACTIVE') {
+    if (admin_data.status !== 'ACTIVE') {
         const error = new Error("Account is not active")
         error.statusCode = 401
         throw error;
