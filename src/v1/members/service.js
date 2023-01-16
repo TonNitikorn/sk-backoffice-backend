@@ -2,6 +2,8 @@ const model = require('../../models/index');
 const { v4: uuidv4 } = require('uuid');
 const Op = require("sequelize").Op;
 const sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+
 
 //get member list
 exports.getMemberList = async () => {
