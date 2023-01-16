@@ -48,6 +48,12 @@ exports.createMember = async (data, admin) => {
             error.statusCode = 401
             throw error;
         }
+
+        //hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(data.password, salt);
+            
+
     
         //create log_actions
         await model.log_actions.create({
