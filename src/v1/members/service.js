@@ -16,7 +16,26 @@ exports.getMemberList = async (data, admin) => {
         }
     }
 
-    console.log('where :>> ', where);
+    //where by fname
+    if (data.fname) {
+        where.fname = data.fname 
+    }
+    //where by lname
+    if (data.lname) {
+        where.lname = data.lname
+    }
+    //where by bank_number
+    if (data.bank_number) {
+        where.bank_number = data.bank_number
+    }
+    //where by tel
+    if (data.tel) {
+        where.tel = data.tel
+    }
+    //where by username
+    if (data.username) {
+        where.username = data.username
+    }
 
     const member = await model.members.findAll({
         where: where,

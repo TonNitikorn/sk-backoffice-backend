@@ -6,7 +6,8 @@
 module.exports = (sequelize, DataTypes) => {
   const members = sequelize.define("members", {
       uuid: DataTypes.STRING(255),
-      name: DataTypes.STRING(255),
+        prefix: DataTypes.STRING(255),
+        name: DataTypes.STRING(255),
       bank_name: DataTypes.STRING(255),
       fname: DataTypes.STRING(255),
       lname: DataTypes.STRING(255),

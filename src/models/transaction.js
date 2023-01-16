@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const transaction = sequelize.define("transaction", {
         uuid: DataTypes.STRING(255),
+        prefix: DataTypes.STRING(255),
         credit: DataTypes.DECIMAL(10,2),
         credit_before: DataTypes.DECIMAL(10,2),
         credit_after: DataTypes.DECIMAL(10,2),

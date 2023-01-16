@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const banks = sequelize.define("banks", {
         uuid: DataTypes.STRING(255),
+        prefix: DataTypes.STRING(255),
         bank_no: DataTypes.STRING(255),
         bank_number: DataTypes.STRING(255),
         bank_name: DataTypes.STRING(255),

@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const affiliate_setting = sequelize.define("affiliate_setting", {
         uuid: DataTypes.STRING(255),
+        prefix: DataTypes.STRING(255),
         type_setting:  DataTypes.ENUM('PERCENT','FIX'),
         type_affiliate: DataTypes.ENUM('TURN','DEPOSIT'),
         max: DataTypes.JSON,   

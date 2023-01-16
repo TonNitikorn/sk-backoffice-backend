@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const sub_game_type = sequelize.define("sub_game_type", {
         uuid: DataTypes.STRING(255),
+        prefix: DataTypes.STRING(255),
         game_type_uuid: DataTypes.STRING(255),
         game_name: DataTypes.STRING(255),
         game_id: DataTypes.STRING(255),
