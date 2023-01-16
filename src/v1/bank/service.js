@@ -29,15 +29,12 @@ exports.getBankList = async (type) => {
 
 //create bank by model bank
 exports.createBank = async (data, admin) => {
-
+// console.log('data.type :>> ', data.type);
     //check model bank is null
     if (!data.bank_no || !data.bank_number || !data.bank_name || !data.bank_account_name || !data.bank_total || !data.type || !data.tel || !data.birthdate || !data.pin || !data.device_id || !data.status || !data.sub_type || !data.is_decimal || !data.username_ibanking || !data.password_ibanking || !data.qr_code || !data.status_system ) {
-        // return res.status(400).json({
-        //     message: 'ข้อมูลไม่ถูกต้อง'
-        // }).then(response => response);
         const error = new Error("กรุณากรอกข้อมูลให้ครบถ้วน");
         error.statusCode = 400
-        return error;
+        throw error;
     }
     //check bank_number and bank_name is duplicate
     const check_bank = await model.banks.findOne({
@@ -158,7 +155,7 @@ exports.updateBank = async (data, admin,uuid) => {
                 uuid: uuidv4(),
                 admins_uuid: admin.uuid,
                 actions: 'delete_bank',
-                description: data,
+                description: uuid,
                 create_at: new Date(),
             });
         
