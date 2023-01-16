@@ -33,7 +33,7 @@ exports.getMemberList = async () => {
 exports.createMember = async (data, admin) => {
     
         //check model member is null
-        if (!data.fname || !data.lname || !data.bank_name || !data.bank_number || !data.tel || !data.line_id || !data.platform || !data.password || !data.affiliate_by) {
+        if (!data.fname || !data.lname || !data.bank_name || !data.bank_number || !data.tel || !data.line_id || !data.platform || !data.password  ) {
             const error = new Error("กรุณากรอกข้อมูลให้ครบถ้วน");
             error.statusCode = 400
             throw error;
@@ -63,8 +63,6 @@ exports.createMember = async (data, admin) => {
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(data.password, salt);
             
-
-    
         //create log_actions
         await model.log_actions.create({
             uuid: uuidv4(),
@@ -73,6 +71,12 @@ exports.createMember = async (data, admin) => {
             description: data,
             create_at: new Date(),
         });
+
+        //check platform is not friend set data.affiliate_by = -
+        if (data.platform != 'friend') {
+            data.affiliate_by = '-'
+        }
+        
     
         //create member
         const member = await model.members.create({
