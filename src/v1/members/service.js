@@ -38,19 +38,27 @@ exports.createMember = async (data, admin) => {
             error.statusCode = 400
             throw error;
         }
-        //check username is duplicate
-        const check_member = await model.members.findOne({
+        //check bank_number and tel is duplicate
+        const checkBankNumber = await model.members.findOne({
             where: {
-                username: data.username
+                bank_number: data.bank_number
             }
         });
-    
-        if (check_member) {
-            const error = new Error("ชื่อผู้ใช้ซ้ำ");
-            error.statusCode = 401
+        if (checkBankNumber) {
+            const error = new Error("เลขบัญชีซ้ำ");
+            error.statusCode = 400
             throw error;
         }
-
+        const checkTel = await model.members.findOne({
+            where: {
+                tel: data.tel
+            }
+        });
+        if (checkTel) {
+            const error = new Error("เบอร์โทรซ้ำ");
+            error.statusCode = 400
+            throw error;
+        }
         //hash password
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(data.password, salt);
