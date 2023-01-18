@@ -17,7 +17,7 @@ exports.updateAdminPassword = async (req, res, next) => {
         const data = req.body;
         const admin = req.admin;
         const adminUpdate = await adminService.updateAdminPassword(data, admin);
-        res.status(200).json({message: 'แก้ไขรหัสผ่านสำเร็จ'});
+        res.status(200).json({adminUpdate,message: 'แก้ไขรหัสผ่านสำเร็จ'});
     } catch (error) {
         next(error);
     }
@@ -25,7 +25,8 @@ exports.updateAdminPassword = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
     try {
-        const admin = await adminService.register(req.body);
+        
+        const admin = await adminService.register(req.body,req.admin);
         res.status(200).json(
             admin
         );
