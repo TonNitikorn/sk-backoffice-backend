@@ -47,3 +47,71 @@ exports.authorized = async (req, res, next) => {
     })(req, res, next);
 
 }
+
+exports.owner = async (req, res, next) => {
+    try {
+      if (req.admin.role !== "OWNER") {
+        const error = new Error("Unauthorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  exports.support = async (req, res, next) => {
+    try {
+      if (req.admin.role !== "SUPPORT" && req.admin.role !== "OWNER") {
+        const error = new Error("Unauthorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  
+  exports.superadmin = async (req, res, next) => {
+    try {
+      if (req.admin.role !== "SUPERADMIN" && req.admin.role !== "SUPPORT" && req.admin.role !== "OWNER") {
+        const error = new Error("Unauthorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  exports.admin = async (req, res, next) => {
+    try {
+      if (req.admin.role !== "ADMIN" && req.admin.role !== "SUPERADMIN" && req.admin.role !== "SUPPORT" && req.admin.role !== "OWNER") {
+        const error = new Error("Unauthorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+  exports.staff = async (req, res, next) => {
+    try {
+      if (req.admin.role !== "STAFF" && req.admin.role !== "ADMIN" && req.admin.role !== "SUPERADMIN" && req.admin.role !== "SUPPORT" && req.admin.role !== "OWNER") {
+        const error = new Error("Unauthorized");
+        error.statusCode = 401;
+        throw error;
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+  

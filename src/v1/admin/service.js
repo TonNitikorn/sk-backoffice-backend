@@ -157,3 +157,48 @@ exports.updateAdmin = async (data, admin) => {
         message: 'แก้ไขข้อมูลสำเร็จ'
     }
 }
+
+//get all admin
+exports.getAllAdmin = async () => {
+    const admin_data = await model.admins.findAll({
+        attributes: { exclude: ['id', 'update_at', 'password'] }
+    });
+
+    return admin_data;
+}
+
+//change admin password by uuid
+exports.changeAdminPasswordByUuid = async (data, admin) => {
+    //check body data is null
+    if (!data.password) {
+        const error = new Error("ข้อมูลไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    await model.log_actions.create({
+        uuid: uuidv4(),
+        admins_uuid: admin.uuid,
+        actions: 'change password',
+        description: data,
+        create_at: new Date(),
+    });
+
+    //generate password 10 digit
+    const password = Math.random().toString(36).slice(-10);
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+
+    await model.admins.update({
+        password: hashPassword,
+        update_at: new Date()
+    }, {
+        where: {
+            uuid: data.uuid
+        }
+    });
+    return {
+        message: 'แก้ไขรหัสผ่านสำเร็จ'
+    }
+}

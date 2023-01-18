@@ -46,4 +46,27 @@ exports.updateAdmin = async (req, res, next) => {
     }
 }
 
+//get all admin
+exports.getAllAdmin = async (req, res, next) => {
+    try {
+        const admin = await adminService.getAllAdmin();
+        res.status(200).json(admin);
+    } catch (error) {
+        next(error);
+    }
+}
+
+//change admin password by uuid
+exports.changeAdminPasswordByUuid = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const admin = req.admin;
+        const admindata = await adminService.changeAdminPasswordByUuid(data,admin);
+        res.status(200).json({message: 'แก้ไขรหัสผ่านสำเร็จ'});
+    } catch (error) {
+        next(error);
+    }
+}
+
+
  

@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 const Op = require("sequelize").Op;
 const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
-const { search } = require('./router');
 
 
 //get member list
