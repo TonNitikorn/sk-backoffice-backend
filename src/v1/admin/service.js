@@ -150,7 +150,7 @@ exports.updateAdmin = async (data, admin) => {
         update_at: new Date()
     }, {
         where: {
-            uuid: admin.uuid
+            uuid: data.uuid
         }
     });
     return {
