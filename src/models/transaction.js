@@ -38,7 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       // associations can be defined here
     };
   
-  
     
     return transaction;
   

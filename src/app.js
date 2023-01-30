@@ -7,10 +7,11 @@ const cors = require('cors')
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./v1/auth/router');
-const bankRouter = require('./v1/bank/router');
+const bankRouter = require('./v1/banks/router');
 const memberRouter = require('./v1/members/router');
-const adminRouter = require('./v1/admin/router');
-
+const adminRouter = require('./v1/admins/router');
+const uploadRouter = require('./v1/uploads/router');
+const reportRouter = require('./v1/reports/router');
 
 
 // const passport = require('./middleware/passport');
@@ -31,6 +32,8 @@ app.use('/auth', authRouter);
 app.use('/bank', bankRouter);
 app.use('/member', memberRouter);
 app.use('/admin', adminRouter);
+app.use('/upload', uploadRouter);
+app.use('/report', reportRouter);
 
 
 app.use(errorHandler);

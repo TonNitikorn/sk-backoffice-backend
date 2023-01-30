@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
         type_name_th: DataTypes.STRING(255),
         type_logo: DataTypes.STRING(255),
         type_name_eng: DataTypes.STRING(255),
-        type_name_eng: DataTypes.STRING(255),
         update_at: DataTypes.DATE,
         create_at: DataTypes.DATE,
       },
