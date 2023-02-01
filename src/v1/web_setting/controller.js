@@ -1,11 +1,4 @@
-const AWS = require('aws-sdk');
-const config = require('../../config/index');
-const { v4: uuidv4 } = require('uuid');
-const model = require('../../models/index');
-const { Op } = require("sequelize");
 const service = require('./service');
-
-
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const { S3Client, paginateListObjectsV2 } = require("@aws-sdk/client-s3");
@@ -15,8 +8,8 @@ const s3 = new S3Client({
     endpoint: "https://sgp1.digitaloceanspaces.com",
     region: "sgp1",
     credentials: {
-        accessKeyId: config.SPACES_ACCESS_KEY_ID,
-        secretAccessKey: config.SPACES_SECRET_ACCESS_KEY
+        accessKeyId: 'DO00JH8GAEMF94ZKTTWM',
+        secretAccessKey: 'ZVW8XXfuyMsldau2olroF/zJ7padKgQTRkF2oL6FlIs'
     },
     sslEnabled: true,
 
@@ -31,70 +24,23 @@ const upload = multer({
             cb(null, `${Date.now().toString()}-${file.originalname}`);
         }
     })
-}).array('upload', 1);
-
-//upload file
-exports.uploadfile = async(req, res, next) => {
-    upload(req, res, function(error) {
-        if (error) {
-            //throw error;
-            console.log(error);
-            // return res.status(400).json({message: error.message});
-            const error = new Error(error.message);
-            error.statusCode = 400
-            throw error;
-
-
-        }
-        res.status(200).json({
-            message: 'File uploaded successfully',
-            url: req.files[0].location
-        });
-    });
-
-}
-
-//create game_type
-exports.createGameType = async(req, res, next) => {
+}).array('upload', 10);
+//get game_type associated with sub_game_type
+exports.getGameType = async(req, res, next) => {
     try {
-        upload(req, res,async function(error) {
-            if (error) {
-                //throw error;
-                console.log(error);
-                // return res.status(400).json({message: error.message});
-                const error = new Error(error.message);
-                error.statusCode = 400
-                throw error;
-    
-    
-            }
-          
-            //check res.status 200
-            // console.log('res.status :>> ', res.status);
-            console.log('req.files :>> ', req.files);
-            // console.log('req.body :>> ', req.body);
-            
-            let data = req.body;
-            let admin = req.admin;
-            let game_icon = req.files[0].location;
-            //create game_type on service
-            const game_type_data = await service.createGameType(data,admin,game_icon);
-            res.status(201).json({
-                message: 'success',
-                status: true,
-                data: game_type_data
-            })
-            
-        });
+        let data = req.body;
+        let admin = req.admin;
+        //get game_type on service
+        const game_type_data = await service.getGameType(data,admin);
+        res.status(201).json(game_type_data)
     }
     catch (error) {
         next(error);
      }
-
 }
 
-//create sub_game_type
-exports.createSubGameType = async(req, res, next) => {
+//create web_setting logo
+exports.createWebSettingLogo = async(req, res, next) => {
     try {
         upload(req, res,async function(error) {
             if (error) {
@@ -109,30 +55,94 @@ exports.createSubGameType = async(req, res, next) => {
  
             let data = req.body;
             let admin = req.admin;
-            let game_icon = req.files[0].location;
+            let logo = req.files[0].location;
             //create game_type on service
-            const sub_game_type_data = await service.createSubGameType(data,admin,game_icon);
+            const web_setting_logo_data = await service.createWebSetting(data,admin,logo);
             res.status(201).json({
                 message: 'success',
                 status: true,
-                data: sub_game_type_data
+                data: web_setting_logo_data
             })
-            
         });
+      
+        
     }
     catch (error) {
         next(error);
      }
 }
 
-//get game_type associated with sub_game_type
-exports.getGameType = async(req, res, next) => {
+//create web_setting banner
+exports.createWebSettingBanner = async(req, res, next) => {
     try {
-        let data = req.body;
-        let admin = req.admin;
-        //get game_type on service
-        const game_type_data = await service.getGameType(data,admin);
-        res.status(201).json(game_type_data)
+        upload(req, res,async function(error) {
+            if (error) {
+                //throw error;
+                console.log(error);
+                // return res.status(400).json({message: error.message});
+                const error = new Error(error.message);
+                error.statusCode = 400
+                throw error;
+    
+            }
+            let data = req.body;
+            let admin = req.admin;
+            let banner = [];
+//loop get req.files by length
+            for (let i = 0; i < req.files.length; i++) {
+                // banner = req.files[i].location;
+                //map req.files to banner
+                banner.push(req.files[i].location);
+            }
+
+            //create game_type on service
+            const web_setting_banner_data = await service.createWebSettingBanner(data,admin,banner);
+            res.status(201).json({
+                message: 'success',
+                status: true,
+                data: web_setting_banner_data
+            })
+        });
+      
+        
+    }
+    catch (error) {
+        next(error);
+     }
+}
+
+//create web_setting slide
+exports.createWebSettingSlide = async(req, res, next) => {
+    try {
+        upload(req, res,async function(error) {
+            if (error) {
+                //throw error;
+                console.log(error);
+                // return res.status(400).json({message: error.message});
+                const error = new Error(error.message);
+                error.statusCode = 400
+                throw error;
+    
+            }
+            let data = req.body;
+            let admin = req.admin;
+            let slide = [];
+//loop get req.files by length
+            for (let i = 0; i < req.files.length; i++) {
+                // banner = req.files[i].location;
+                //map req.files to banner
+                slide.push(req.files[i].location);
+            }
+
+            //create game_type on service
+            const web_setting_slide_data = await service.createWebSettingSlide(data,admin,slide);
+            res.status(201).json({
+                message: 'success',
+                status: true,
+                data: web_setting_slide_data
+            })
+        });
+
     }
     catch (error) {
         next(error);

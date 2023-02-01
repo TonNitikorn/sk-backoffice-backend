@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
   members.associate = (models) => {
     // associations can be defined here
+
   };
 
   

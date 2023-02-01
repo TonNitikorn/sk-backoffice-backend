@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
   
     transaction.associate = (models) => {
       // associations can be defined here
+
+      //association with members by member_uuid
+      transaction.belongsTo(models.members, {
+        foreignKey: 'member_uuid',
+        targetKey: 'uuid',
+        as: 'members'
+      });
+      
     };
   
     

@@ -97,13 +97,22 @@ exports.createTransaction = async(data, admin) => {
 
 //list transaction by transfer_type
 exports.listTransactionByTransferType = async(admin,transfer_type) => {
-    //get transaction
+    //get transaction and include member by member_uuid
     const transaction = await model.transaction.findAll({
         where: {
             transfer_type: transfer_type,
         },
-        attributes: { exclude: ['id'] }
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
     });
+
+
     //sum transaction amount_after
     const sumAmount = await model.transaction.sum('amount_after', {
         where: {
