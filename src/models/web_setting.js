@@ -2,8 +2,8 @@ module.exports = (sequelize, DataTypes) => {
   const web_setting = sequelize.define("web_setting", {
     uuid: DataTypes.STRING(255),
     prefix: DataTypes.STRING(255),
-    type: DataTypes.JSON,
-    img_url: DataTypes.JSON,
+    type:DataTypes.STRING(255),
+    img_url:DataTypes.STRING(255),
     logo: DataTypes.JSON,
     banner: DataTypes.JSON,
     slide: DataTypes.JSON,
