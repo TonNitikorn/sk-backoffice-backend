@@ -102,6 +102,8 @@ exports.listTransactionByTransferType = async(admin,transfer_type) => {
         where: {
             transfer_type: transfer_type,
         },
+        attributes: { exclude: ['id'] },
+
         include: [{
             model: model.members,
             as: 'members',

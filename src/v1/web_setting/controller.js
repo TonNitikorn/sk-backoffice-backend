@@ -149,3 +149,49 @@ exports.createWebSettingSlide = async(req, res, next) => {
      }
 }
 
+//create web_setting img_url and type
+exports.createWebSettingImgUrl = async(req, res, next) => {
+    try {
+        upload(req, res,async function(error) {
+            if (error) {
+                //throw error;
+                console.log(error);
+                // return res.status(400).json({message: error.message});
+                const error = new Error(error.message);
+                error.statusCode = 400
+                throw error;
+    
+            }
+            let data = req.body;
+            let admin = req.admin;
+            let img_url = req.files[0].location;
+            //create game_type on service
+            const web_setting_img_url_data = await service.createWebSettingImgUrl(data,admin,img_url);
+            res.status(201).json({
+                message: 'success',
+                status: true,
+                data: web_setting_img_url_data
+            })
+        });
+      
+        
+    }
+    catch (error) {
+        next(error);
+     }
+}
+
+//get web_setting all
+exports.getWebSettingAll = async(req, res, next) => {
+    try {
+        let data = req.body;
+        let admin = req.admin;
+        //get game_type on service
+        const web_setting_data = await service.getWebSettingAll(data,admin);
+        res.status(201).json(web_setting_data)
+    }
+    catch (error) {
+        next(error);
+     }
+}
+

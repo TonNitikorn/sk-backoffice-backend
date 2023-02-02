@@ -10,6 +10,14 @@ router.get('/get_game_type', uploadController.getGameType)
 router.post('/create_web_setting_logo', uploadController.createWebSettingLogo)
 //create web_setting_banner
 router.post('/create_web_setting_banner', uploadController.createWebSettingBanner)
+//create web_setting_slide
+router.post('/create_web_setting_slide', uploadController.createWebSettingSlide)
+//create web_setting_img_url
+router.post('/create_web_setting_img_url', uploadController.createWebSettingImgUrl)
+//get web_setting
+router.get('/get_web_setting', uploadController.getWebSettingAll)
+
+
 
 
 module.exports = router;

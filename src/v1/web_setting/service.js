@@ -179,3 +179,23 @@ exports.createWebSettingSlide = async (data, admin, slide) => {
     }
 }
 
+//create web_setting img_url and type
+exports.createWebSettingImgUrl = async (data, admin, img_url) => {
+    const web_setting_data = await model.web_setting.create({
+        uuid: uuidv4(),
+        img_url: img_url,
+        type: data.type,
+        create_at: new Date(),
+    })
+    //return web_setting_data and slide count
+
+    return web_setting_data
+
+}
+//get web_setting all exclude logo banner slide
+exports.getWebSettingAll = async () => {
+    const web_setting_data = await model.web_setting.findAll({
+        attributes: { exclude: ['id', 'logo', 'banner', 'slide', 'prefix', 'create_at', 'update_at'] }
+    })
+    return web_setting_data
+}

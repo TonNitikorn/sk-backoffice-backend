@@ -10,5 +10,7 @@ router.post('/create_game_type', uploadController.createGameType)
 router.post('/create_sub_game_type', uploadController.createSubGameType)
 //get game_type
 router.get('/get_game_type', uploadController.getGameType)
+//get web_setting
+
 
 module.exports = router;

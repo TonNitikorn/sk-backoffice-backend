@@ -43,10 +43,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'uuid',
         as: 'members'
       });
-      
+
     };
   
     
     return transaction;
   
   };
+  
