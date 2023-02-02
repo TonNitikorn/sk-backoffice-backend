@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         game_type_uuid: DataTypes.STRING(255),
         game_name: DataTypes.STRING(255),
         game_id: DataTypes.STRING(255),
-        game_icon: DataTypes.JSON,
+        game_icon: DataTypes.STRING(255),
         update_at: DataTypes.DATE,
         create_at: DataTypes.DATE,
     },
