@@ -13,6 +13,8 @@ const adminRouter = require('./v1/admins/router');
 const uploadRouter = require('./v1/uploads/router');
 const reportRouter = require('./v1/reports/router');
 const web_settingRouter = require('./v1/web_setting/router');
+const transactionRouter = require('./v1/transactions/router');
+
 
 
 // const passport = require('./middleware/passport');
@@ -36,6 +38,7 @@ app.use('/admin', adminRouter);
 app.use('/upload', uploadRouter);
 app.use('/report', reportRouter);
 app.use('/web_setting', web_settingRouter);
+app.use('/transaction', transactionRouter);
 
 
 app.use(errorHandler);

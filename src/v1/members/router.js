@@ -9,7 +9,10 @@ router.post('/member_list', [ passport.authorized ], memberServices.getMemberLis
 router.post('/create_member',[ passport.authorized ], memberServices.createMember);
 router.post('/update_member',[ passport.authorized ], memberServices.updateMember);
 router.post('/set_member_status',[ passport.authorized ], memberServices.changeMemberStatus);
-router.post('/get_member',[ passport.authorized ], memberServices.getMemberByUuid);
+router.post('/get_member' , memberServices.getMemberByUuid);
+//post member and transaction
+router.post('/member_transaction' , memberServices.getMemberAndTransactionByUuid);
+
 
 
 module.exports = router;

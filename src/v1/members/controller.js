@@ -73,3 +73,31 @@ exports.getMemberByUuid = async (req, res, next) => {
         next(error);
     }
 }
+
+//get member and transaction by uuid
+exports.getMemberAndTransactionByUuid = async (req, res, next) => {
+    try {
+        const uuid = req.body.uuid;
+        const member = await memberServices.getMemberAndTransactionByUuid(uuid);
+        res.status(200).json(
+            member
+        );
+    } catch (error) {
+        next(error);
+    }
+}
+
+//get member and transaction by uuid
+// exports.getMemberAndTransactionByUuid = async (req, res, next) => {
+//     try {
+//         const uuid = req.body.uuid;
+//         const member = await memberServices.getMemberAndTransactionByUuid(uuid);
+//         res.status(200).json(
+//             member
+//         );
+//     } catch (error) {
+//         next(error);
+//     }
+// }
+
+

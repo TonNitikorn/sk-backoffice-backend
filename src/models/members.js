@@ -37,6 +37,15 @@ module.exports = (sequelize, DataTypes) => {
 
   members.associate = (models) => {
     // associations can be defined here
+    //association with transaction by member_uuid
+    members.hasMany(models.transaction, {
+      foreignKey: 'member_uuid',
+      sourceKey: 'uuid',
+      as: 'transaction'
+    });
+    
+    
+
 
   };
 

@@ -201,39 +201,112 @@ exports.getMemberByUuid = async (uuid) => {
     return member
 }
 
-//get member and transaction by uuid
-exports.getMemberAndTransactionByUuid = async (uuid) => {
+//create withdraw request
+exports.createWithdrawRequest = async (data, admin) => {
+    //check model member is null
+    if (!data.member_uuid || !data.amount) {
+        const error = new Error("กรุณากรอกข้อมูลให้ครบถ้วน");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check amount is not 0
+    if (data.amount == 0) {
+        const error = new Error("จำนวนเงินไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check amount is not negative
+    if (data.amount < 0) {
+        const error = new Error("จำนวนเงินไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check amount is not decimal
+    if (data.amount % 1 != 0) {
+        const error = new Error("จำนวนเงินไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check amount is not more than 100,000
+    if (data.amount > 100000) {
+        const error = new Error("จำนวนเงินไม่ถูกต้อง");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check member is exist
     const member = await model.members.findOne({
         where: {
-            uuid: uuid
-        },
-        attributes: { exclude: ['id', 'password'] },
-        include: [{
-            model: model.transaction,
-            as: 'transaction',
-            // attributes: { exclude: ['id', 'members_uuid'] },
-            attributes: ['credit',  'credit_before', 'credit_after', 'create_at']
-        }]
+            uuid: data.member_uuid
+        }
+    });
+    if (!member) {
+        const error = new Error("ไม่พบสมาชิก");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check member credit is not 0
+    if (member.credit == 0) {
+        const error = new Error("เครดิตไม่พอ");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check member credit is not negative
+    if (member.credit < 0) {
+        const error = new Error("เครดิตไม่พอ");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //check member credit is not more than amount
+    if (member.credit < data.amount) {
+        const error = new Error("เครดิตไม่พอ");
+        error.statusCode = 400
+        throw error;
+    }
+
+    //create withdraw request
+    const withdraw_request = await model.transaction.create({
+        // uuid: uuidv4(),
+        // member_uuid: data.member_uuid,
+        // amount: data.amount,
+        // status: 'WAITING',
+        // create_at: new Date(),
+        uuid: uuidv4(),
+        credit: data.amount,
+        credit_before: 0,
+        credit_after: 0,
+        amount: 0,
+        amount_before: 0,
+        amount_after: 0,
+        transfer_by: "admin.uuid",
+        transfer_type: "WITHDRAW",
+        status_transction: 'CREATE',
+        status_provider: 'SUCCESS',
+        status_bank: 'SUCCESS',
+        content:'-',
+        member_uuid: data.member_uuid,
+        detail: '-',
+        detail_bank: '-',
+        slip: '-',
+        create_at: new Date(),
     });
 
-    //return member
-    return member
+    // //create log_actions
+    // await model.log_actions.create({
+    //     uuid: uuidv4(),
+    //     admins_uuid: admin.uuid,
+    //     actions: 'create_withdraw_request',
+    //     description: data,
+    //     create_at: new Date(),
+    // });
+
+    //return withdraw_request
+    return withdraw_request
 }
-
-// get transaction and member by uuid
-// exports.getMemberAndTransactionByUuid = async (uuid) => {
-//     const transaction = await model.transaction.findOne({
-//         where: {
-//             uuid: uuid
-//         },
-//         attributes: { exclude: ['id', 'members_uuid'] },
-//         include: [{
-//             model: model.members,
-//             as: 'transaction',
-//             attributes: { exclude: ['id', 'password'] },
-//         }]
-//     });
-
-//     //return member
-//     return transaction
-// }

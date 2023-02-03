@@ -38,11 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       // associations can be defined here
 
       //association with members by member_uuid
-      transaction.belongsTo(models.members, {
-        foreignKey: 'member_uuid',
-        targetKey: 'uuid',
-        as: 'members'
-      });
+      // transaction.belongsTo(models.members, {
+      //   foreignKey: 'member_uuid',
+      //   targetKey: 'uuid',
+      //   as: 'members'
+      // });
 
     };
   
