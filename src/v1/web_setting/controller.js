@@ -203,7 +203,7 @@ exports.deleteWebSetting = async(req, res, next) => {
         //get game_type on service
         const web_setting_data = await service.deleteWebSetting(data,admin);
         res.status(201).json({
-            message: 'success',web_setting_data
+            message: 'Delete success',
         })
     }
     catch (error) {
