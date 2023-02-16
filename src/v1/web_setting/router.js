@@ -16,6 +16,9 @@ router.post('/create_web_setting_slide', uploadController.createWebSettingSlide)
 router.post('/create_web_setting_img_url', uploadController.createWebSettingImgUrl)
 //get web_setting
 router.get('/get_web_setting', uploadController.getWebSettingAll)
+//delete web_setting by uuid
+router.delete('/delete_web_setting', uploadController.deleteWebSetting)
+
 
 
 

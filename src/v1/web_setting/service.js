@@ -199,3 +199,12 @@ exports.getWebSettingAll = async () => {
     })
     return web_setting_data
 }
+//delete web_setting by uuid
+exports.deleteWebSetting = async (data) => {
+    const web_setting_data = await model.web_setting.destroy({
+        where: {
+            uuid: data.uuid
+        }
+    })
+    return web_setting_data
+}

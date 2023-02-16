@@ -195,3 +195,19 @@ exports.getWebSettingAll = async(req, res, next) => {
      }
 }
 
+//delete web_setting by uuid
+exports.deleteWebSetting = async(req, res, next) => {
+    try {
+        let data = req.body;
+        let admin = req.admin;
+        //get game_type on service
+        const web_setting_data = await service.deleteWebSetting(data,admin);
+        res.status(201).json({
+            message: 'success',web_setting_data
+        })
+    }
+    catch (error) {
+        next(error);
+     }
+}
+
