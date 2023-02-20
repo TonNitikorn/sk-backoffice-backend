@@ -5,7 +5,7 @@ const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 //update member by uuid
-exports.updateMember = async(data, admin, uuid) => {
+exports.updateMember = async (data, admin, uuid) => {
     //check model member is null
     // if (!data.fname || !data.lname || !data.bank_name || !data.bank_number || !data.tel || !data.line_id || !data.platform || !data.password || !data.affiliate_by) {
     //     return res.status(400).json({
@@ -52,7 +52,7 @@ exports.updateMember = async(data, admin, uuid) => {
 }
 
 //create transaction
-exports.createTransaction = async(data, admin) => {
+exports.createTransaction = async (data, admin) => {
     // //check model transaction is null
     // if (!data.members_uuid || !data.amount || !data.type || !data.description) {
     //     return res.status(400).json({
@@ -91,12 +91,12 @@ exports.createTransaction = async(data, admin) => {
         create_at: new Date(),
 
     });
- 
+
     return transaction
 }
 
 //list transaction by transfer_type
-exports.listTransactionByTransferType = async(admin,transfer_type) => {
+exports.listTransactionByTransferType = async (admin, transfer_type) => {
     //get transaction and include member by member_uuid
     const transaction = await model.transaction.findAll({
         where: {
@@ -129,9 +129,49 @@ exports.listTransactionByTransferType = async(admin,transfer_type) => {
         }
     });
 
+    //return transaction
+    return { sumAmount, sumCredit, transaction }
+}
+
+//list transaction by status_transction = 'MANUAL'
+exports.listTransactionByStatusTransction = async (admin, status_transction) => {
+    //get transaction and include member by member_uuid
+    const transaction = await model.transaction.findAll({
+        where: {
+            status_transction: status_transction,
+        },
+        attributes: { exclude: ['id'] },
+
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
+    });
+
+    //sum transaction transfer_type = 'DEPOSIT'
+    const sumDeposit = await model.transaction.sum('credit', {
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'DEPOSIT',
+        }
+    });
+
+    //sum transaction transfer_type = 'WITHDRAW'
+    const sumWithdraw = await model.transaction.sum('credit', {
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'WITHDRAW',
+        }
+    });
+
+
 
     //return transaction
-    return {sumAmount,sumCredit,transaction}
+    return { sumDeposit, sumWithdraw }
 }
 
 

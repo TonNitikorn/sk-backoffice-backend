@@ -31,8 +31,7 @@ exports.listTransactionByTransferType = async(req, res, next) => {
     try {
         const admin = req.admin;
         const transfer_type = req.body.transfer_type;
-        console.log('transfer_type :>> ', transfer_type);
-//check transfer_type is null
+ //check transfer_type is null
         if (transfer_type == null || transfer_type == undefined  || !transfer_type == 'DEPOSIT' || !transfer_type == 'WITHDRAW' ) {
             const error = new Error("ประเภทคำขอไม่ถูกต้อง");
                 error.statusCode = 400;
@@ -45,4 +44,26 @@ exports.listTransactionByTransferType = async(req, res, next) => {
         next(error);
     }
 }
+
+//list transaction by if status_transction = 'MANUAL'
+exports.listTransactionByStatusTransction = async(req, res, next) => {
+
+    try {
+        const admin = req.admin;
+        const status_transction = req.body.status_transction;
+        //check status_transction is null
+        if (status_transction == null || status_transction == undefined || !status_transction == 'MANUAL') {
+            const error = new Error("สถานะคำขอไม่ถูกต้อง");
+                error.statusCode = 400;
+                throw error;
+        }
+
+        const transaction = await reportServices.listTransactionByStatusTransction(admin, status_transction);
+        res.status(200).json(transaction);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 
