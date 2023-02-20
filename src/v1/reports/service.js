@@ -168,10 +168,46 @@ exports.listTransactionByStatusTransction = async (admin, status_transction) => 
         }
     });
 
+    //list transaction transfer_type = 'DEPOSIT'
+    const listDeposit = await model.transaction.findAll({
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'DEPOSIT',
+        },
+        attributes: { exclude: ['id'] },
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
+    });
+
+    //list transaction transfer_type = 'WITHDRAW'
+    const listWithdraw = await model.transaction.findAll({
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'WITHDRAW',
+        },
+        attributes: { exclude: ['id'] },
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
+    });
+
+
+
 
 
     //return transaction
-    return { sumDeposit, sumWithdraw }
+    return { sumDeposit, sumWithdraw, listDeposit, listWithdraw }
 }
 
 
