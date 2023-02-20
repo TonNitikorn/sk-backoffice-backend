@@ -210,4 +210,58 @@ exports.listTransactionByStatusTransction = async (admin, status_transction) => 
     return { sumDeposit, sumWithdraw, listDeposit, listWithdraw }
 }
 
+//manual transaction
+exports.manualTransaction = async (data, status_transction) => {
+    // //check model transaction is null
+    // if (!data.members_uuid || !data.amount || !data.type || !data.description) {
+    //     return res.status(400).json({
+    //         message: 'ข้อมูลไม่ถูกต้อง'
+    //     });
+    // }
 
+    // //create log_actions
+    // await model.log_actions.create({
+    //     uuid: uuidv4(),
+    //     admins_uuid: admin.uuid,
+    //     actions: 'manual_transaction',
+    //     description: data,
+    //     create_at: new Date(),
+    // });
+
+    //update transaction
+    const listDeposit = await model.transaction.findAll({
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'DEPOSIT',
+        },
+        attributes: { exclude: ['id'] },
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
+    });
+
+    //list transaction transfer_type = 'WITHDRAW'
+    const listWithdraw = await model.transaction.findAll({
+        where: {
+            status_transction: status_transction,
+            transfer_type: 'WITHDRAW',
+        },
+        attributes: { exclude: ['id'] },
+        include: [{
+            model: model.members,
+            as: 'members',
+            attributes: { exclude: ['id', 'password'] }
+        }],
+        order: [
+            ['create_at', 'DESC'],
+        ],
+    });
+
+    //return transaction
+    return {listDeposit, listWithdraw}
+}

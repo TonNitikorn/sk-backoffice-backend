@@ -65,5 +65,16 @@ exports.listTransactionByStatusTransction = async(req, res, next) => {
     }
 }
 
+//manual transaction
+exports.manualTransaction = async(req, res, next) => {
+    try {
+        const data = req.body;
+        const status_transction = req.body.status_transction;
+        const transaction = await reportServices.manualTransaction(data, status_transction);
+        res.status(200).json(transaction);
+    } catch (error) {
+        next(error);
+    }
+}
 
 

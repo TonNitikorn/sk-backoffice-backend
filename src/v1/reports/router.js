@@ -11,6 +11,8 @@ router.post('/create_transaction', reportServices.createTransaction);
 router.post('/get_transaction', reportServices.listTransactionByTransferType);
 //getManualTransaction
 router.post('/get_manual_transaction', reportServices.listTransactionByStatusTransction);
+//manualTransaction
+router.post('/manual_transaction', reportServices.manualTransaction);
 
 
 

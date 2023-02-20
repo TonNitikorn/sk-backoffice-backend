@@ -374,7 +374,7 @@ exports.createTransactionByMemberUsername = async (data, admin) => {
         status_transction: 'MANUAL',
         status_provider: 'SUCCESS',
         status_bank: 'SUCCESS',
-        content:'-',
+        content:data.content,
         member_uuid: member.uuid,
         detail: '-',
         detail_bank: '-',
